@@ -1,19 +1,27 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+
+void usage()
+{
+	std::cout << "Usage:\n";
+	std::cout << "    next <file>\n";
+}
 
 int main(int argc, char **argv)
 {
-	std::cout << "Hello, World\n";
-	std::cout << "Argument Count: " << argc << '\n';
-	if (argc > 1)
+	if (argc < 2)
 	{
-		std::cout << "Arguments (ignoring filename):\n";
-		for (int i = 1; i < argc; i++)
-			std::cout << "    " << argv[i] << '\n';
-		return 0;
-	}
-	else
-	{
-		std::cout << "No arguments given\n";
+		usage();
+		std::cout << "Error: no input provided";
 		return 1;
 	}
+
+	std::ifstream fileRead(argv[1]);
+	std::string fileContent((std::istreambuf_iterator<char>(fileRead)),
+							(std::istreambuf_iterator<char>()));
+
+	std::cout << fileContent << '\n';
+
+	return 0;
 }
